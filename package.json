@@ -1,0 +1,33 @@
+{
+  "name": "grafana-monetdb-datasource",
+  "version": "1.0.0",
+  "description": "Grafana MonetDB datasource plugin ",
+  "main": "index.js",
+  "scripts": {
+    "prebuild": "npm run clean",
+    "build": "npm run tsc && npm run copy",
+    "copy": "cp -r src/img dist/ && cp -r src/partials dist/ && cp -r src/css dist/",
+    "clean": "rimraf dist",
+    "tsc": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sstalin/grafana-monetdb-datasource.git"
+  },
+  "keywords": [
+    "grafana",
+    "monetdb",
+    "datasource"
+  ],
+  "author": "Svetlin Stalinov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sstalin/grafana-monetdb-datasource/issues"
+  },
+  "homepage": "https://github.com/sstalin/grafana-monetdb-datasource#readme",
+  "devDependencies": {
+    "@types/angular": "^1.6.14",
+    "rimraf": "^2.6.1",
+    "typescript": "^2.2.2"
+  }
+}

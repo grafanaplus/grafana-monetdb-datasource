@@ -1,0 +1,23 @@
+{
+    "compilerOptions": {
+        "sourceMap": true,
+        "outDir": "dist",
+        "noImplicitAny": false,
+        "target": "es5",
+        "module": "system",
+        "noEmitOnError": true,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "noImplicitReturns":false,
+        "noImplicitThis":false,
+        "noImplicitUseStrict":false,
+        "noUnusedLocals":false,
+        "moduleResolution": "classic"
+    },
+    "include": [
+       "src/**/*.ts"
+    ],
+    "exclude": [
+       
+    ]
+}
