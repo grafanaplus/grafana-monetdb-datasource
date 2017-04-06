@@ -6,7 +6,7 @@
   "scripts": {
     "prebuild": "npm run clean",
     "build": "npm run tsc && npm run copy",
-    "copy": "cp -r src/img dist/ && cp -r src/partials dist/ && cp -r src/css dist/",
+    "copy": "cp src/plugin.json dist/ && cp -r src/img dist/ && cp -r src/partials dist/",
     "clean": "rimraf dist",
     "tsc": "tsc"
   },
