@@ -12,4 +12,9 @@ declare module 'app/plugins/sdk' {
     }
 }
 
+declare module 'moment' {
+  var moment: any;
+  export default moment;
+}
+
 

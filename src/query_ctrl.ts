@@ -4,8 +4,7 @@ import angular from 'angular';
 export class MonetQueryCtrl extends QueryCtrl {
   
   /** @ngInject **/  
-  constructor($scope, $injector, private uiSegmentSrv)  {
-    
+  constructor($scope, $injector, private templateSrv, private $q, private uiSegmentSrv)  {
     super($scope, $injector);
     this.uiSegmentSrv = uiSegmentSrv;
     this.target.target = this.target.target || 'select metric';
