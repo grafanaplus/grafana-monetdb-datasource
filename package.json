@@ -8,6 +8,8 @@
     "build": "npm run tsc && npm run copy",
     "copy": "cp src/plugin.json dist/ && cp -r src/img dist/ && cp -r src/partials dist/",
     "clean": "rimraf dist",
+    "pretest": "npm run build",
+    "test": "karma start",
     "tsc": "tsc"
   },
   "repository": {
@@ -27,7 +29,21 @@
   "homepage": "https://github.com/sstalin/grafana-monetdb-datasource#readme",
   "devDependencies": {
     "@types/angular": "^1.6.14",
+    "@types/angular-mocks": "^1.5.9",
+    "@types/jasmine": "^2.5.47",
+    "angular": "^1.6.4",
+    "angular-mocks": "^1.6.4",
+    "es6-promise": "^4.1.0",
+    "es6-shim": "^0.35.3",
+    "jasmine-core": "^2.5.2",
+    "karma": "^1.6.0",
+    "karma-chrome-launcher": "^2.0.0",
+    "karma-jasmine": "^1.1.0",
+    "karma-phantomjs-launcher": "^1.0.4",
+    "karma-typescript-preprocessor": "^0.3.1",
+    "phantomjs-prebuilt": "^2.1.14",
     "rimraf": "^2.6.1",
+    "systemjs": "^0.20.12",
     "typescript": "^2.2.2"
   }
 }

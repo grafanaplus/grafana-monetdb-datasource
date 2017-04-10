@@ -1,11 +1,10 @@
-import {QueryCtrl} from 'app/plugins/sdk';
+import { QueryCtrl } from 'app/plugins/sdk';
 import angular from 'angular';
 
 export class MonetQueryCtrl extends QueryCtrl {
-  uiSegmentSrv;
   
   /** @ngInject **/  
-  constructor($scope, $injector, uiSegmentSrv)  {
+  constructor($scope, $injector, private uiSegmentSrv)  {
     
     super($scope, $injector);
     this.uiSegmentSrv = uiSegmentSrv;
