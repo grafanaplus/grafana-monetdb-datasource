@@ -2,6 +2,7 @@ import { QueryCtrl } from 'app/plugins/sdk';
 import angular from 'angular';
 
 export class MonetQueryCtrl extends QueryCtrl {
+  static templateUrl = 'partials/query.editor.html';
   
   /** @ngInject **/  
   constructor($scope, $injector, private templateSrv, private $q, private uiSegmentSrv)  {
