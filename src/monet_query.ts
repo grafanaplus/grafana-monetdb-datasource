@@ -1,7 +1,7 @@
 
 import _ from 'lodash';
 import queryPart from './query_part';
-import kbn from 'app/core/utils/kbn';
+// import kbn from 'app/core/utils/kbn';
 
 export default class MonetQuery {
   target: any;
@@ -18,9 +18,10 @@ export default class MonetQuery {
     this.scopedVars = scopedVars;
 
     target.policy = target.policy || 'default';
-    target.dsType = 'influxdb';
+    target.dsType = 'monetdb';
     target.resultFormat = target.resultFormat || 'time_series';
     target.orderByTime = target.orderByTime || 'ASC';
+    // tag columns
     target.tags = target.tags || [];
     target.groupBy = target.groupBy || [
       {type: 'time', params: ['$__interval']},
@@ -188,12 +189,12 @@ export default class MonetQuery {
       return value;
     }
 
-    if (typeof value === 'string') {
-      return kbn.regexEscape(value);
-    }
+    // if (typeof value === 'string') {
+    //   return kbn.regexEscape(value);
+    // }
 
-    var escapedValues = _.map(value, kbn.regexEscape);
-    return escapedValues.join('|');
+    // var escapedValues = _.map(value, kbn.regexEscape);
+    // return escapedValues.join('|');
   };
 
   render(interpolate?) {

@@ -33,9 +33,8 @@ declare module 'app/core/components/query_part/query_part' {
   export function quotedIdentityRenderer(part, innerExpr);
 }
 
-declare module 'moment' {
-  var moment: any;
-  export default moment;
-}
 
+declare module 'app/core/utils/datemath' {
+  export function parse(text, roundUp);
+}
 

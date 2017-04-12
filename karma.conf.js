@@ -12,6 +12,8 @@ module.exports = function (config) {
             'node_modules/systemjs/dist/system.src.js',
             'node_modules/angular/angular.js',
             'node_modules/angular-mocks/angular-mocks.js',
+            'node_modules/lodash/lodash.js',
+            'node_modules/moment/moment.js',
             './test-main.js',
             { pattern: "sdk/**/*.js", included: false },
             { pattern: "dist/**/*.js", included: false }

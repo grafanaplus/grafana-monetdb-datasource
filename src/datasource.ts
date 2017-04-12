@@ -1,6 +1,6 @@
 import angular from 'angular';
 import _ from 'lodash';
-import * as dateMath from './utils/datemath';
+import * as dateMath from 'app/core/utils/datemath';
 import ResponseParser from './response_parser';
 import MonetQuery from './monet_query';
 import MonetSeries from './monet_series';
@@ -148,7 +148,7 @@ export default class MonetDatasource {
   }
 
   testDatasource() {
-    let testQuery = 'SELECT * FROM tables;';
+    let testQuery = 'select name from tables where schema_id=(select id as id from schemas where name="timeseries");';
     return this.metricFindQuery(testQuery).then(() => {
       return { status: "success", message: "Data source is working", title: "Success" };
     });

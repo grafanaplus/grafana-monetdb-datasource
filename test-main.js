@@ -12,8 +12,13 @@
         paths: {
             'angular': 'node_modules/angular/angular.js',
             'angular-mocks': 'node_modules/angular-mocks/angular-mocks.js',
+            'app/plugins/sdk': 'sdk/query_ctrl.sdk.js',
+            'app/core/components/query_part/query_part': 'sdk/query_part.js',
+            'app/core/utils/datemath': 'sdk/datemath.js',
             'jasmine': "node_modules/jasmine-core/lib/jasmine-core.js",
-            'app/plugins/sdk': 'sdk/query_ctrl.sdk.js'
+            'moment': 'node_modules/moment/moment.js',
+            'lodash': 'sdk/lodash_extended.js',
+            'lodash-src': 'node_modules/lodash/lodash.js',
         },
         packages: {
             dist: {
@@ -32,6 +37,14 @@
                 format: 'global',
                 deps: ['angular'],
             },
+            'node_modules/moment/moment.js': {
+                format: 'global',
+                exports: 'moment',
+            },
+            'node_modules/lodash/lodash.js': {
+                format: 'global',
+                exports: 'lodash',
+            }
         }
     });
 
