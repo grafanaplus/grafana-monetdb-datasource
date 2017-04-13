@@ -33,8 +33,14 @@ declare module 'app/core/components/query_part/query_part' {
   export function quotedIdentityRenderer(part, innerExpr);
 }
 
-
 declare module 'app/core/utils/datemath' {
   export function parse(text, roundUp);
 }
+
+declare module 'test/specs/helpers' {
+  let helpers: any;
+  export default helpers;
+}
+
+declare var sinon: any;
 

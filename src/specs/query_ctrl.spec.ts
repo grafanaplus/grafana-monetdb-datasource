@@ -1,34 +1,27 @@
 import angular from 'angular';
 import { MonetQueryCtrl } from '../query_ctrl';
+import helpers from 'test/specs/helpers';
 
-interface ICtx {
-    $q: any;
-    scope: any;
-    panelCtrl: any;
-    target: any;
-    ctrl: any;
-    datasource: {
-        metricFindQuery()
-    }
-}
 describe('MonetQueryCtrl', () => {
-    let ctx: ICtx;
-   
-    beforeEach(angular.mock.module(function($compileProvider) {
+    let ctx = new helpers.ControllerTestContext();
+
+    beforeEach(angular.mock.module(function ($compileProvider) {
         $compileProvider.preAssignBindingsEnabled(true);
     }));
 
     beforeEach(angular.mock.module(($provide) => {
         // mock injected service
-        $provide.service('templateSrv', () => {});
-        $provide.service('uiSegmentSrv', () => {});
+        $provide.service('templateSrv', () => { });
+        $provide.service('uiSegmentSrv', () => {
+            return jasmine.createSpyObj('uiSegmentSrvSpy', ['newPlusButton', 'newSegment', 'newSelectMeasurement']);
+        });
     }));
 
     beforeEach(inject(($rootScope, $controller, $q) => {
         ctx.$q = $q;
         ctx.scope = $rootScope.$new();
-        //ctx.datasource.metricFindQuery = sinon.stub().returns(ctx.$q.when([]));
-        ctx.datasource = jasmine.createSpyObj('datasource', ['metricFindQuery']);
+        ctx.datasource.metricFindQuery = sinon.stub().returns(ctx.$q.when([]));
+        // ctx.datasource = jasmine.createSpyObj('datasource', ['metricFindQuery']);
         //spyOn(ctx.datasource, 'metricFindQuery').and.returnValue(ctx.$q.when([]));
         ctx.panelCtrl = { panel: {} };
         ctx.panelCtrl.refresh = jasmine.createSpy('refresh');
@@ -42,9 +35,9 @@ describe('MonetQueryCtrl', () => {
     }));
 
     describe('init', () => {
-        // it('should be defined', () => {
-        //     expect(ctx.ctrl).toBeDefined();
-        // });
+        it('should be defined', () => {
+            expect(ctx.ctrl).toBeDefined();
+        });
     });
 
 });

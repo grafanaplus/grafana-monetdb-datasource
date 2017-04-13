@@ -4,7 +4,7 @@ module.exports = function (config) {
     config.set({
         basePath: __dirname,
 
-        frameworks: ["jasmine"],
+        frameworks: ["jasmine", 'sinon'],
 
         // list of files / patterns to load in the browser
         files: [
