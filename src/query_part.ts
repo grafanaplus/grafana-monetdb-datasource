@@ -144,14 +144,14 @@ register({
   renderer: functionRenderer,
 });
 
-register({
-  type: 'integral',
-  addStrategy: replaceAggregationAddStrategy,
-  category: categories.Aggregations,
-  params: [],
-  defaultParams: [],
-  renderer: functionRenderer,
-});
+// register({
+//   type: 'integral',
+//   addStrategy: replaceAggregationAddStrategy,
+//   category: categories.Aggregations,
+//   params: [],
+//   defaultParams: [],
+//   renderer: functionRenderer,
+// });
 
 register({
   type: 'mean',
@@ -171,14 +171,14 @@ register({
   renderer: functionRenderer,
 });
 
-register({
-  type: 'mode',
-  addStrategy: replaceAggregationAddStrategy,
-  category: categories.Aggregations,
-  params: [],
-  defaultParams: [],
-  renderer: functionRenderer,
-});
+// register({
+//   type: 'mode',
+//   addStrategy: replaceAggregationAddStrategy,
+//   category: categories.Aggregations,
+//   params: [],
+//   defaultParams: [],
+//   renderer: functionRenderer,
+// });
 
 register({
   type: 'sum',
@@ -191,59 +191,59 @@ register({
 
 // transformations
 
-register({
-  type: 'derivative',
-  addStrategy: addTransformationStrategy,
-  category: categories.Transformations,
-  params: [{ name: "duration", type: "interval", options: ['1s', '10s', '1m', '5m', '10m', '15m', '1h']}],
-  defaultParams: ['10s'],
-  renderer: functionRenderer,
-});
+// register({
+//   type: 'derivative',
+//   addStrategy: addTransformationStrategy,
+//   category: categories.Transformations,
+//   params: [{ name: "duration", type: "interval", options: ['1s', '10s', '1m', '5m', '10m', '15m', '1h']}],
+//   defaultParams: ['10s'],
+//   renderer: functionRenderer,
+// });
 
-register({
-  type: 'spread',
-  addStrategy: addTransformationStrategy,
-  category: categories.Transformations,
-  params: [],
-  defaultParams: [],
-  renderer: functionRenderer,
-});
+// register({
+//   type: 'spread',
+//   addStrategy: addTransformationStrategy,
+//   category: categories.Transformations,
+//   params: [],
+//   defaultParams: [],
+//   renderer: functionRenderer,
+// });
 
-register({
-  type: 'non_negative_derivative',
-  addStrategy: addTransformationStrategy,
-  category: categories.Transformations,
-  params: [{ name: "duration", type: "interval", options: ['1s', '10s', '1m', '5m', '10m', '15m', '1h']}],
-  defaultParams: ['10s'],
-  renderer: functionRenderer,
-});
+// register({
+//   type: 'non_negative_derivative',
+//   addStrategy: addTransformationStrategy,
+//   category: categories.Transformations,
+//   params: [{ name: "duration", type: "interval", options: ['1s', '10s', '1m', '5m', '10m', '15m', '1h']}],
+//   defaultParams: ['10s'],
+//   renderer: functionRenderer,
+// });
 
-register({
-  type: 'difference',
-  addStrategy: addTransformationStrategy,
-  category: categories.Transformations,
-  params: [],
-  defaultParams: [],
-  renderer: functionRenderer,
-});
+// register({
+//   type: 'difference',
+//   addStrategy: addTransformationStrategy,
+//   category: categories.Transformations,
+//   params: [],
+//   defaultParams: [],
+//   renderer: functionRenderer,
+// });
 
-register({
-  type: 'moving_average',
-  addStrategy: addTransformationStrategy,
-  category: categories.Transformations,
-  params: [{ name: "window", type: "number", options: [5, 10, 20, 30, 40]}],
-  defaultParams: [10],
-  renderer: functionRenderer,
-});
+// register({
+//   type: 'moving_average',
+//   addStrategy: addTransformationStrategy,
+//   category: categories.Transformations,
+//   params: [{ name: "window", type: "number", options: [5, 10, 20, 30, 40]}],
+//   defaultParams: [10],
+//   renderer: functionRenderer,
+// });
 
-register({
-  type: 'cumulative_sum',
-  addStrategy: addTransformationStrategy,
-  category: categories.Transformations,
-  params: [],
-  defaultParams: [],
-  renderer: functionRenderer,
-});
+// register({
+//   type: 'cumulative_sum',
+//   addStrategy: addTransformationStrategy,
+//   category: categories.Transformations,
+//   params: [],
+//   defaultParams: [],
+//   renderer: functionRenderer,
+// });
 
 register({
   type: 'stddev',
@@ -254,58 +254,58 @@ register({
   renderer: functionRenderer,
 });
 
-register({
-  type: 'time',
-  category: groupByTimeFunctions,
-  params: [{ name: "interval", type: "time", options: ['auto', '1s', '10s', '1m', '5m', '10m', '15m', '1h'] }],
-  defaultParams: ['auto'],
-  renderer: functionRenderer,
-});
+// register({
+//   type: 'time',
+//   category: groupByTimeFunctions,
+//   params: [{ name: "interval", type: "time", options: ['auto', '1s', '10s', '1m', '5m', '10m', '15m', '1h'] }],
+//   defaultParams: ['auto'],
+//   renderer: functionRenderer,
+// });
 
-register({
-  type: 'fill',
-  category: groupByTimeFunctions,
-  params: [{ name: "fill", type: "string", options: ['none', 'null', '0', 'previous', 'linear'] }],
-  defaultParams: ['null'],
-  renderer: functionRenderer,
-});
+// register({
+//   type: 'fill',
+//   category: groupByTimeFunctions,
+//   params: [{ name: "fill", type: "string", options: ['none', 'null', '0', 'previous', 'linear'] }],
+//   defaultParams: ['null'],
+//   renderer: functionRenderer,
+// });
 
-register({
-  type: 'elapsed',
-  addStrategy: addTransformationStrategy,
-  category: categories.Transformations,
-  params: [{ name: "duration", type: "interval", options: ['1s', '10s', '1m', '5m', '10m', '15m', '1h']}],
-  defaultParams: ['10s'],
-  renderer: functionRenderer,
-});
+// register({
+//   type: 'elapsed',
+//   addStrategy: addTransformationStrategy,
+//   category: categories.Transformations,
+//   params: [{ name: "duration", type: "interval", options: ['1s', '10s', '1m', '5m', '10m', '15m', '1h']}],
+//   defaultParams: ['10s'],
+//   renderer: functionRenderer,
+// });
 
 // Selectors
-register({
-  type: 'bottom',
-  addStrategy: replaceAggregationAddStrategy,
-  category: categories.Selectors,
-  params: [{name: 'count', type: 'int'}],
-  defaultParams: [3],
-  renderer: functionRenderer,
-});
+// register({
+//   type: 'bottom',
+//   addStrategy: replaceAggregationAddStrategy,
+//   category: categories.Selectors,
+//   params: [{name: 'count', type: 'int'}],
+//   defaultParams: [3],
+//   renderer: functionRenderer,
+// });
 
-register({
-  type: 'first',
-  addStrategy: replaceAggregationAddStrategy,
-  category: categories.Selectors,
-  params: [],
-  defaultParams: [],
-  renderer: functionRenderer,
-});
+// register({
+//   type: 'first',
+//   addStrategy: replaceAggregationAddStrategy,
+//   category: categories.Selectors,
+//   params: [],
+//   defaultParams: [],
+//   renderer: functionRenderer,
+// });
 
-register({
-  type: 'last',
-  addStrategy: replaceAggregationAddStrategy,
-  category: categories.Selectors,
-  params: [],
-  defaultParams: [],
-  renderer: functionRenderer,
-});
+// register({
+//   type: 'last',
+//   addStrategy: replaceAggregationAddStrategy,
+//   category: categories.Selectors,
+//   params: [],
+//   defaultParams: [],
+//   renderer: functionRenderer,
+// });
 
 register({
   type: 'max',
@@ -334,14 +334,14 @@ register({
   renderer: functionRenderer,
 });
 
-register({
-  type: 'top',
-  addStrategy: replaceAggregationAddStrategy,
-  category: categories.Selectors,
-  params: [{name: 'count', type: 'int'}],
-  defaultParams: [3],
-  renderer: functionRenderer,
-});
+// register({
+//   type: 'top',
+//   addStrategy: replaceAggregationAddStrategy,
+//   category: categories.Selectors,
+//   params: [{name: 'count', type: 'int'}],
+//   defaultParams: [3],
+//   renderer: functionRenderer,
+// });
 
 register({
   type: 'tag',
@@ -351,14 +351,14 @@ register({
   renderer: fieldRenderer,
 });
 
-register({
-  type: 'math',
-  addStrategy: addMathStrategy,
-  category: categories.Math,
-  params: [{ name: "expr", type: "string"}],
-  defaultParams: [' / 100'],
-  renderer: suffixRenderer,
-});
+// register({
+//   type: 'math',
+//   addStrategy: addMathStrategy,
+//   category: categories.Math,
+//   params: [{ name: "expr", type: "string"}],
+//   defaultParams: [' / 100'],
+//   renderer: suffixRenderer,
+// });
 
 register({
   type: 'alias',

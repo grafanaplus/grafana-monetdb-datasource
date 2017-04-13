@@ -23,10 +23,12 @@ export default class MonetQuery {
     target.orderByTime = target.orderByTime || 'ASC';
     // tag columns
     target.tags = target.tags || [];
-    target.groupBy = target.groupBy || [
-      {type: 'time', params: ['$__interval']},
-      {type: 'fill', params: ['null']},
-    ];
+    // N/A in Monet
+    // target.groupBy = target.groupBy || [
+    //   {type: 'time', params: ['$__interval']},
+    //   {type: 'fill', params: ['null']},
+    // ];
+    target.groupBy = target.groupBy || [];
     target.select = target.select || [[
       {type: 'field', params: ['value']},
       {type: 'mean', params: []},
