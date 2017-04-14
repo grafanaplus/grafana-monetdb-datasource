@@ -35,7 +35,7 @@ function register(options: any) {
 var groupByTimeFunctions = [];
 
 function aliasRenderer(part, innerExpr) {
-  return innerExpr + ' AS ' + '"' + part.params[0] + '"';
+  return innerExpr + ' AS ' + part.params[0];
 }
 
 function fieldRenderer(part, innerExpr) {
@@ -75,25 +75,26 @@ function addTransformationStrategy(selectParts, partModel) {
   selectParts.splice(i, 0, partModel);
 }
 
-function addMathStrategy(selectParts, partModel) {
-  var partCount = selectParts.length;
-  if (partCount > 0) {
-    // if last is math, replace it
-    if (selectParts[partCount-1].def.type === 'math') {
-      selectParts[partCount-1] = partModel;
-      return;
-    }
-    // if next to last is math, replace it
-    if (selectParts[partCount-2].def.type === 'math') {
-      selectParts[partCount-2] = partModel;
-      return;
-    } else if (selectParts[partCount-1].def.type === 'alias') { // if last is alias add it before
-      selectParts.splice(partCount-1, 0, partModel);
-      return;
-    }
-  }
-  selectParts.push(partModel);
-}
+// N/A in Monet
+// function addMathStrategy(selectParts, partModel) {
+//   var partCount = selectParts.length;
+//   if (partCount > 0) {
+//     // if last is math, replace it
+//     if (selectParts[partCount-1].def.type === 'math') {
+//       selectParts[partCount-1] = partModel;
+//       return;
+//     }
+//     // if next to last is math, replace it
+//     if (selectParts[partCount-2].def.type === 'math') {
+//       selectParts[partCount-2] = partModel;
+//       return;
+//     } else if (selectParts[partCount-1].def.type === 'alias') { // if last is alias add it before
+//       selectParts.splice(partCount-1, 0, partModel);
+//       return;
+//     }
+//   }
+//   selectParts.push(partModel);
+// }
 
 function addAliasStrategy(selectParts, partModel) {
   var partCount = selectParts.length;

@@ -206,7 +206,6 @@ export default class MonetDatasource {
   };
 
   getTimeFilter(options) {
-    // TODO implement monet specfic time filter
     let from = this.getMonetTime(options.rangeRaw.from, false);
     let until = this.getMonetTime(options.rangeRaw.to, true);
     let fromIsAbsolute = from[from.length-1] === 'ms';
@@ -219,7 +218,7 @@ export default class MonetDatasource {
   }
 
   getMonetTime(date, roundUp) {
-    // TODO implement monet specfic time implementation
+    // TODO implement Monet specfic time implementation
     if (_.isString(date)) {
       if (date === 'now') {
         return 'now';

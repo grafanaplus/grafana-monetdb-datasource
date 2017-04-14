@@ -166,7 +166,7 @@ export default class MonetQuery {
       value = this.templateSrv.replace(value, this.scopedVars, 'regex');
     }
 
-    return str + '"' + tag.key + '" ' + operator + ' ' + value;
+    return str + tag.key + ' ' + operator + ' ' + value;
   }
 
   getMeasurementAndPolicy(interpolate) {

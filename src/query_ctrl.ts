@@ -98,7 +98,6 @@ export class MonetQueryCtrl extends QueryCtrl {
       //   options.push(this.uiSegmentSrv.newSegment({value: 'time($interval)'}));
       // }
       for (let tag of tags) {
-        
         options.push(this.uiSegmentSrv.newSegment({value: 'tag(' + tag.text + ')'}));
       }
       return options;

@@ -9,7 +9,7 @@ describe('MonetQueryPart', () => {
             });
 
             expect(part.text).toBe('alias(test)');
-            expect(part.render('mean(value)')).toBe('mean(value) AS "test"');
+            expect(part.render('mean(value)')).toBe('mean(value) AS test');
         });
 
         it('should handle filed parts', () => {
