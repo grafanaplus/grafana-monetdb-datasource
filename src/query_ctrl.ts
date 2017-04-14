@@ -87,13 +87,15 @@ export class MonetQueryCtrl extends QueryCtrl {
 
     return this.datasource.metricFindQuery(query).then(tags => {
       var options = [];
-      if (!this.queryModel.hasFill()) {
-        options.push(this.uiSegmentSrv.newSegment({value: 'fill(null)'}));
-      }
-      if (!this.queryModel.hasGroupByTime()) {
-        options.push(this.uiSegmentSrv.newSegment({value: 'time($interval)'}));
-      }
+      // N/A in Monet
+      // if (!this.queryModel.hasFill()) {
+      //   options.push(this.uiSegmentSrv.newSegment({value: 'fill(null)'}));
+      // }
+      // if (!this.queryModel.hasGroupByTime()) {
+      //   options.push(this.uiSegmentSrv.newSegment({value: 'time($interval)'}));
+      // }
       for (let tag of tags) {
+        
         options.push(this.uiSegmentSrv.newSegment({value: 'tag(' + tag.text + ')'}));
       }
       return options;

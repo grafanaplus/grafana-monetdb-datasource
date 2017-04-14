@@ -1,7 +1,7 @@
 
 import _ from 'lodash';
 import queryPart from './query_part';
-// import kbn from 'app/core/utils/kbn';
+import kbn from 'app/core/utils/kbn';
 
 export default class MonetQuery {
   target: any;
@@ -191,12 +191,12 @@ export default class MonetQuery {
       return value;
     }
 
-    // if (typeof value === 'string') {
-    //   return kbn.regexEscape(value);
-    // }
+    if (typeof value === 'string') {
+      return kbn.regexEscape(value);
+    }
 
-    // var escapedValues = _.map(value, kbn.regexEscape);
-    // return escapedValues.join('|');
+    var escapedValues = _.map(value, kbn.regexEscape);
+    return escapedValues.join('|');
   };
 
   render(interpolate?) {

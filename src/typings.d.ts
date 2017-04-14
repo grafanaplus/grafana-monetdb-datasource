@@ -1,3 +1,5 @@
+declare var sinon: any;
+
 // dummy modules
 declare module 'app/plugins/sdk' {
   export class QueryCtrl {
@@ -42,5 +44,8 @@ declare module 'test/specs/helpers' {
   export default helpers;
 }
 
-declare var sinon: any;
+declare module 'app/core/utils/kbn' {
+  let kbn: any;
+  export default kbn;
+}
 
