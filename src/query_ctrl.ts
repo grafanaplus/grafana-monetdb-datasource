@@ -199,7 +199,7 @@ export class MonetQueryCtrl extends QueryCtrl {
   }
 
   getMeasurements(measurementFilter) {
-    var query = this.queryBuilder.buildExploreQuery('MEASUREMENTS', undefined, measurementFilter);
+    let query = this.queryBuilder.buildExploreQuery('MEASUREMENTS');
     return this.datasource.metricFindQuery(query)
       .then(this.transformToSegments(true))
       .catch(this.handleQueryError.bind(this));
@@ -212,7 +212,12 @@ export class MonetQueryCtrl extends QueryCtrl {
 
   transformToSegments(addTemplateVars) {
     return (results) => {
-      var segments = _.map(results, segment => {
+      let mockResults = [
+        {text: 'mock_cpu'},
+        {text: 'mock_disk'},
+        {text: 'mock_net'},
+      ];
+      var segments = _.map(mockResults, segment => {
         return this.uiSegmentSrv.newSegment({ value: (segment as any).text, expandable: (segment as any).expandable });
       });
 
@@ -228,8 +233,8 @@ export class MonetQueryCtrl extends QueryCtrl {
 
   /**
    * Tag columns and value columns
-   * @param segment 
-   * @param index 
+   * @param segment
+   * @param index
    */
   getTagsOrValues(segment, index) {
     if (segment.type === 'condition') {

@@ -1,5 +1,6 @@
 import _ from 'lodash';
 
+
 export default class MonetQueryBuilder {
     target;
     database;
@@ -33,12 +34,17 @@ export default class MonetQueryBuilder {
         return str + '"' + tag.key + '" ' + operator + ' ' + value;
     }
 
-    build(){
 
-    }
+    buildExploreQuery(type) {
+        let query;
+        switch (type) {
+            case "MEASURMENTS": {
+                query = 'SELECT name as measurements from metrics';
+            };
+            default: break;
+        }
 
-    buildExploreQuery() {
-        
+        return query;
     }
 
 }
