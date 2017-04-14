@@ -42,7 +42,7 @@ function fieldRenderer(part, innerExpr) {
   if (part.params[0] === '*')  {
     return '*';
   }
-  return '"' + part.params[0] + '"';
+  return part.params[0];
 }
 
 function replaceAggregationAddStrategy(selectParts, partModel) {

@@ -30,31 +30,33 @@ export default class MonetQuery {
     // ];
     target.groupBy = target.groupBy || [];
     target.select = target.select || [[
-      {type: 'field', params: ['value']},
-      {type: 'mean', params: []},
+      { type: 'field', params: ['value'] },
+      { type: 'mean', params: [] },
     ]];
 
     this.updateProjection();
   }
 
   updateProjection() {
-    this.selectModels = _.map(this.target.select, function(parts: any) {
+    this.selectModels = _.map(this.target.select, function (parts: any) {
       return _.map(parts, queryPart.create);
     });
     this.groupByParts = _.map(this.target.groupBy, queryPart.create);
   }
 
   updatePersistedParts() {
-    this.target.select = _.map(this.selectModels, function(selectParts) {
-      return _.map(selectParts, function(part: any) {
-        return {type: part.def.type, params: part.params};
+    this.target.select = _.map(this.selectModels, function (selectParts) {
+      return _.map(selectParts, function (part: any) {
+        return { type: part.def.type, params: part.params };
       });
     });
   }
 
+
   hasGroupByTime() {
     return _.find(this.target.groupBy, (g: any) => g.type === 'time');
   }
+
 
   hasFill() {
     return _.find(this.target.groupBy, (g: any) => g.type === 'fill');
@@ -64,7 +66,7 @@ export default class MonetQuery {
     var stringParts = value.match(/^(\w+)\((.*)\)$/);
     var typePart = stringParts[1];
     var arg = stringParts[2];
-    var partModel = queryPart.create({type: typePart, params: [arg]});
+    var partModel = queryPart.create({ type: typePart, params: [arg] });
     var partCount = this.target.groupBy.length;
 
     if (partCount === 0) {
@@ -72,8 +74,8 @@ export default class MonetQuery {
     } else if (typePart === 'time') {
       this.target.groupBy.splice(0, 0, partModel.part);
     } else if (typePart === 'tag') {
-      if (this.target.groupBy[partCount-1].type === 'fill') {
-        this.target.groupBy.splice(partCount-1, 0, partModel.part);
+      if (this.target.groupBy[partCount - 1].type === 'fill') {
+        this.target.groupBy.splice(partCount - 1, 0, partModel.part);
       } else {
         this.target.groupBy.push(partModel.part);
       }
@@ -130,7 +132,7 @@ export default class MonetQuery {
   }
 
   addSelectPart(selectParts, type) {
-    var partModel = queryPart.create({type: type});
+    var partModel = queryPart.create({ type: type });
     partModel.def.addStrategy(selectParts, partModel, this);
     this.updatePersistedParts();
   }
@@ -144,11 +146,12 @@ export default class MonetQuery {
     }
 
     if (!operator) {
-      if (/^\/.*\/$/.test(value)) {
-        operator = '=~';
-      } else {
-        operator = '=';
-      }
+      // if (/^\/.*\/$/.test(value)) {
+      //   operator = '=~';
+      // } else {
+      //   operator = '=';
+      // }
+      operator = '=';
     }
 
     // quote value unless regex
@@ -170,14 +173,12 @@ export default class MonetQuery {
     var policy = this.target.policy;
     var measurement = this.target.measurement || 'measurement';
 
-    if (!measurement.match('^/.*/$')) {
-      measurement = '"' + measurement+ '"';
-    } else if (interpolate) {
+    if (interpolate) {
       measurement = this.templateSrv.replace(measurement, this.scopedVars, 'regex');
     }
 
     if (policy !== 'default') {
-      policy = '"' + this.target.policy + '".';
+      policy = this.target.policy + '.';
     } else {
       policy = "";
     }

@@ -222,14 +222,21 @@ export default class MonetDatasource {
     // TODO implement monet specfic time implementation
     if (_.isString(date)) {
       if (date === 'now') {
-        return 'now()';
+        return 'now';
       }
 
       let parts = /^now-(\d+)([d|h|m|s])$/.exec(date);
       if (parts) {
         let amount = parseInt(parts[1]);
         let unit = parts[2];
-        return 'now() - ' + amount + unit;
+        switch (parts[2]) {
+          case 'd': unit = 'day'; break;
+          case 'h': unit = 'hour'; break;
+          case 'm': unit = 'minute'; break;
+          case 's': unit = 'second'; break;
+          default: break;
+        }
+        return 'now - interval ' + '"' + amount + '"' + ' ' + unit;
       }
       date = dateMath.parse(date, roundUp);
     }

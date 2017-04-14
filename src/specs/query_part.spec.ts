@@ -20,7 +20,7 @@ describe('MonetQueryPart', () => {
             let partText = part.text;
             let rendered = part.render();
             expect(partText).toBe('field(cpu)');
-            expect(rendered).toBe('"cpu"');
+            expect(rendered).toBe('cpu');
         });
 
         it('should handle count parts', () => {

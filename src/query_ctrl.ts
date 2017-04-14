@@ -77,7 +77,10 @@ export class MonetQueryCtrl extends QueryCtrl {
          return {text: item.type, value: item.type};
         }),
       };
-      memo.push(menu);
+      // test for empty submenus e.g. Math N/A in Monet
+      if (menu.submenu.length > 0) {
+        memo.push(menu);
+      }
       return memo;
     }, []);
   }

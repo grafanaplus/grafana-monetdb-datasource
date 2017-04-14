@@ -1,6 +1,7 @@
 {
     "compilerOptions": {
         "sourceMap": true,
+        "inlineSources": true,
         "outDir": "dist",
         "noImplicitAny": false,
         "target": "es5",
