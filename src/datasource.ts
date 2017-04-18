@@ -148,7 +148,7 @@ export default class MonetDatasource {
   }
 
   testDatasource() {
-    let testQuery = 'select name from tables where schema_id=(select id as id from schemas where name="timeseries");';
+    let testQuery = 'select name from tables where schema_id=(select id as id from schemas where name="timetrails");';
     return this.metricFindQuery(testQuery).then(() => {
       return { status: "success", message: "Data source is working", title: "Success" };
     });

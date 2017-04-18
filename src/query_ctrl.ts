@@ -198,6 +198,9 @@ export class MonetQueryCtrl extends QueryCtrl {
     this.target.rawQuery = !this.target.rawQuery;
   }
 
+/**
+ * Gets measurments table names.
+ */
   getMeasurements(measurementFilter) {
     let query = this.queryBuilder.buildExploreQuery('MEASUREMENTS');
     return this.datasource.metricFindQuery(query)
@@ -212,12 +215,7 @@ export class MonetQueryCtrl extends QueryCtrl {
 
   transformToSegments(addTemplateVars) {
     return (results) => {
-      let mockResults = [
-        {text: 'mock_cpu'},
-        {text: 'mock_disk'},
-        {text: 'mock_net'},
-      ];
-      var segments = _.map(mockResults, segment => {
+      var segments = _.map(results, segment => {
         return this.uiSegmentSrv.newSegment({ value: (segment as any).text, expandable: (segment as any).expandable });
       });
 

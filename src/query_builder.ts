@@ -38,8 +38,9 @@ export default class MonetQueryBuilder {
     buildExploreQuery(type) {
         let query;
         switch (type) {
-            case "MEASURMENTS": {
-                query = 'SELECT name as measurements from metrics';
+            case "MEASUREMENTS": {
+                query = 'select name from tables where schema_id=(select id as id from schemas where name="timetrails");';
+                break;
             };
             default: break;
         }
