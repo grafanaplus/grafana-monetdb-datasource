@@ -212,7 +212,7 @@ export default class MonetQuery {
     }
 
     // Epoch time in ms
-    var query = 'SELECT timetrails.epoch(time), ';
+    var query = 'SELECT sys.epoch(time), ';
     var i, y;
     for (i = 0; i < this.selectModels.length; i++) {
       let parts = this.selectModels[i];

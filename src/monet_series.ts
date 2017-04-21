@@ -27,7 +27,7 @@ export default class MonetSeries {
             let label  = metricName + '_' + columnIndex;
             let datapoints = [];
             for (let row of this.serie.values) {
-                let ts = row[0];
+                let ts = row[0] * 1000; // Grafana needs timestamps in ms 
                 let pointValue = row[columnIndex];
                 let point = [pointValue, ts];
                 datapoints.push(point);
