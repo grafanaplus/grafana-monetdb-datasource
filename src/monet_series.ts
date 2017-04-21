@@ -1,27 +1,44 @@
 import _ from 'lodash';
 
 export default class MonetSeries {
-    series;
+    serie;
     alias;
     annotation;
+    target;
 
-    constructor(options) {
-        this.series = options.series;
-        this.alias = options.alias;
-        this.annotation = options.annotation;
+    constructor(serie, target?, annotation?) {
+        this.serie = serie;
+        this.target = target;
+        this.annotation = annotation;
     }
 
-    getTimeSeries() {
-        return [];
+    /**
+     * 
+     * @param _target 
+     */
+    asGraph(_target?) {
+        let seriesList = [];
+        let t = _target || this.target;
+        let metricName = t.measurement;
+        let resultColumnCount = this.serie.values[0].length;
+        let columnIndex = 1;
+
+        do {
+            let label  = metricName + '_' + columnIndex;
+            let datapoints = [];
+            for (let row of this.serie.values) {
+                let ts = row[0];
+                let pointValue = row[columnIndex];
+                let point = [pointValue, ts];
+                datapoints.push(point);
+            }
+            seriesList.push({
+                target: label,
+                datapoints: datapoints
+            });
+            columnIndex += 1;
+        } while (columnIndex < resultColumnCount);
+
+        return seriesList;
     }
-
-    _getSeriesName() {
-
-    }
-
-    getAnnotations() {
-
-    }
-
-    getTable() {}
 }

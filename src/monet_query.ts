@@ -31,7 +31,7 @@ export default class MonetQuery {
     target.groupBy = target.groupBy || [];
     target.select = target.select || [[
       { type: 'field', params: ['value'] },
-      { type: 'mean', params: [] },
+      // { type: 'mean', params: [] },
     ]];
 
     this.updateProjection();
@@ -183,7 +183,7 @@ export default class MonetQuery {
       policy = "";
     }
 
-    return policy + measurement;
+    return policy + 'timetrails.' + measurement;
   }
 
   interpolateQueryStr(value, variable, defaultFormatFn) {
@@ -211,7 +211,8 @@ export default class MonetQuery {
       }
     }
 
-    var query = 'SELECT ';
+    // Epoch time in ms
+    var query = 'SELECT timetrails.epoch(time), ';
     var i, y;
     for (i = 0; i < this.selectModels.length; i++) {
       let parts = this.selectModels[i];
@@ -221,10 +222,11 @@ export default class MonetQuery {
         selectText = part.render(selectText);
       }
 
+      query += selectText;
+
       if (i > 0) {
         query += ', ';
       }
-      query += selectText;
     }
 
     query += ' FROM ' + this.getMeasurementAndPolicy(interpolate) + ' WHERE ';

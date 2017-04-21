@@ -45,6 +45,8 @@ function fieldRenderer(part, innerExpr) {
   return part.params[0];
 }
 
+
+
 function replaceAggregationAddStrategy(selectParts, partModel) {
   // look for existing aggregation
   for (var i = 0; i < selectParts.length; i++) {

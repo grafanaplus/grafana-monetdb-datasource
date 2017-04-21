@@ -199,10 +199,10 @@ export class MonetQueryCtrl extends QueryCtrl {
   }
 
 /**
- * Gets measurments table names.
+ * Get time series metrics.
  */
   getMeasurements(measurementFilter) {
-    let query = this.queryBuilder.buildExploreQuery('MEASUREMENTS');
+    let query = this.queryBuilder.buildExploreQuery('METRICS');
     return this.datasource.metricFindQuery(query)
       .then(this.transformToSegments(true))
       .catch(this.handleQueryError.bind(this));
