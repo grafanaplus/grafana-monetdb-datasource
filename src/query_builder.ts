@@ -35,7 +35,7 @@ export default class MonetQueryBuilder {
     }
 
 
-    buildExploreQuery(type) {
+    buildExploreQuery(type, tagKey?) {
         let query;
         switch (type) {
             case 'METRICS': {
@@ -46,6 +46,15 @@ export default class MonetQueryBuilder {
                 query = `SELECT * FROM timetrails.measures('${this.target.measurement}')`;
                 break;
             }
+            case 'TAG_KEYS': {
+                query = `SELECT * FROM timetrails.tags('${this.target.measurement}')`;
+                break;
+            }
+            case 'TAG_VALUES': {
+                query = `SELECT DISTINCT ${tagKey} FROM timetrails.${this.target.measurement}`;
+                break;
+            }
+
             default: break;
         }
 

@@ -234,7 +234,6 @@ export default class MonetDatasource {
   getTimeFilter(options) {
     let from = this.getMonetTime(options.rangeRaw.from, false);
     let until = this.getMonetTime(options.rangeRaw.to, true);
-   
     if (until === 'now()') {
       return 'time > ' + from;
     }

@@ -14,13 +14,13 @@ export default class MonetSeries {
 
     /**
      * 
-     * @param _target 
+     * @param _target
      */
     asGraph(_target?) {
         let seriesList = [];
         let t = _target || this.target;
         let metricName = t.measurement;
-        let resultColumnCount = this.serie.values[0].length;
+        let resultColumnCount = this.serie.values[0] && this.serie.values[0].length || 0;
         let columnIndex = 1;
 
         do {
