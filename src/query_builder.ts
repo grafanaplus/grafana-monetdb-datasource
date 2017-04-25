@@ -43,7 +43,7 @@ export default class MonetQueryBuilder {
                 break;
             };
             case 'FIELDS': {
-                query = `SELECT * FROM timetrails.measures('${this.target.measurement}')`;
+                query = `SELECT * FROM timetrails.fields('${this.target.measurement}')`;
                 break;
             }
             case 'TAG_KEYS': {
