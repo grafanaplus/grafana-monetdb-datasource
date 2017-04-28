@@ -1,4 +1,3 @@
-
 import _ from 'lodash';
 import queryPart from './query_part';
 import kbn from 'app/core/utils/kbn';
@@ -212,7 +211,7 @@ export default class MonetQuery {
     }
 
     // Epoch time in ms
-    var query = 'SELECT sys.epoch(time), ';
+    var query = 'SELECT sys.epoch(time)';
     var i, y;
     for (i = 0; i < this.selectModels.length; i++) {
       let parts = this.selectModels[i];
@@ -222,11 +221,7 @@ export default class MonetQuery {
         selectText = part.render(selectText);
       }
 
-      query += selectText;
-
-      if (i > 0) {
-        query += ', ';
-      }
+      query += ', ' + selectText;
     }
 
     query += ' FROM ' + this.getMeasurementAndPolicy(interpolate) + ' WHERE ';
@@ -259,8 +254,8 @@ export default class MonetQuery {
       query += ' ORDER BY time DESC';
     }
 
-    if (target.limit) {
-      query += ' LIMIT ' + target.limit;
+    if (target.limit || target.maxDataPoints) {
+      query += ' LIMIT ' + (target.limit || target.maxDataPoints);
     }
 
     if (target.slimit) {

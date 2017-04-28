@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import queryPart from './query_part';
 
 export default class MonetSeries {
     serie;
@@ -22,9 +23,10 @@ export default class MonetSeries {
         let metricName = t.measurement;
         let resultColumnCount = this.serie.values[0] && this.serie.values[0].length || 0;
         let columnIndex = 1;
+        let fieldIndex = 0; // field index in select part
 
         do {
-            let label  = metricName + '_' + columnIndex;
+            let label  = metricName + '_' + queryPart.create(t.select[fieldIndex][0]).render();
             let datapoints = [];
             for (let row of this.serie.values) {
                 let ts = row[0] * 1000; // Grafana needs timestamps in ms 
@@ -37,6 +39,7 @@ export default class MonetSeries {
                 datapoints: datapoints
             });
             columnIndex += 1;
+            fieldIndex += 1;
         } while (columnIndex < resultColumnCount);
 
         return seriesList;
