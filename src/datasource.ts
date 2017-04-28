@@ -60,7 +60,11 @@ export default class MonetDatasource {
 
     }).reduce((acc, current) => {
       if (current !== "") {
-        acc += ";" + current;
+        if (acc) {
+          acc += ";" + current;
+        } else {
+          acc = current;
+        }
       }
       return acc;
     });
