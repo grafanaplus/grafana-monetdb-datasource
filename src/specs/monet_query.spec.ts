@@ -10,21 +10,21 @@ describe('Monet Query', () => {
             }, templateSrv, {});
 
             let queryText = query.render();
-            expect(queryText).toBe('SELECT mean(value) FROM cpu WHERE $timeFilter');
+            expect(queryText).toBe('SELECT sys.epoch(time), value FROM timetrails.cpu WHERE $timeFilter');
         });
     });
 
-    describe('render series with policy only', function () {
-        it('should generate correct query', function () {
-            var query = new MonetQuery({
-                measurement: 'cpu',
-                policy: '5m_avg'
-            }, templateSrv, {});
+    // describe('render series with policy only', function () {
+    //     it('should generate correct query', function () {
+    //         var query = new MonetQuery({
+    //             measurement: 'cpu',
+    //             policy: '5m_avg'
+    //         }, templateSrv, {});
 
-            var queryText = query.render();
-            expect(queryText).toBe('SELECT mean(value) FROM 5m_avg.cpu WHERE $timeFilter');
-        });
-    });
+    //         var queryText = query.render();
+    //         expect(queryText).toBe('SELECT sys.epoch(time), value FROM 5m_avg.cpu WHERE $timeFilter');
+    //     });
+    // });
 
     describe('render series with alias', function () {
         it('should generate correct query', function () {
@@ -33,14 +33,13 @@ describe('Monet Query', () => {
                 select: [
                     [
                         { type: 'field', params: ['value'] },
-                        { type: 'mean', params: [] },
                         { type: 'alias', params: ['text'] },
                     ]
                 ]
             }, templateSrv, {});
 
             var queryText = query.render();
-            expect(queryText).toBe('SELECT mean(value) AS text FROM cpu WHERE $timeFilter');
+            expect(queryText).toBe('SELECT sys.epoch(time), value AS text FROM timetrails.cpu WHERE $timeFilter');
         });
     });
 
@@ -53,7 +52,7 @@ describe('Monet Query', () => {
             }, templateSrv, {});
 
             var queryText = query.render();
-            expect(queryText).toBe('SELECT mean(value) FROM cpu WHERE hostname = \'server1\' AND app = \'email\' AND ' +
+            expect(queryText).toBe('SELECT sys.epoch(time), value FROM timetrails.cpu WHERE hostname = \'server1\' AND app = \'email\' AND ' +
                 '$timeFilter GROUP BY hostname');
         });
     });
@@ -67,7 +66,7 @@ describe('Monet Query', () => {
             }, templateSrv, {});
 
             var queryText = query.render();
-            expect(queryText).toBe('SELECT mean(value) FROM cpu WHERE hostname = \'server1\' OR hostname = \'server2\' AND ' +
+            expect(queryText).toBe('SELECT sys.epoch(time), value FROM timetrails.cpu WHERE hostname = \'server1\' OR hostname = \'server2\' AND ' +
                 '$timeFilter GROUP BY hostname');
         });
     });
@@ -81,7 +80,7 @@ describe('Monet Query', () => {
             }, templateSrv, {});
 
             var queryText = query.render();
-            expect(queryText).toBe('SELECT mean(value) FROM cpu WHERE value > 5 AND $timeFilter');
+            expect(queryText).toBe('SELECT sys.epoch(time), value FROM timetrails.cpu WHERE value > 5 AND $timeFilter');
         });
     });
 
@@ -94,7 +93,7 @@ describe('Monet Query', () => {
             }, templateSrv, {});
 
             var queryText = query.render();
-            expect(queryText).toBe('SELECT mean(value) FROM cpu WHERE $timeFilter ' +
+            expect(queryText).toBe('SELECT sys.epoch(time), value FROM timetrails.cpu WHERE $timeFilter ' +
                 'GROUP BY host');
         });
     });
@@ -107,7 +106,7 @@ describe('Monet Query', () => {
                 groupBy: [],
             }, templateSrv, {});
             var queryText = query.render();
-            expect(queryText).toBe('SELECT value FROM cpu WHERE $timeFilter');
+            expect(queryText).toBe('SELECT sys.epoch(time), value FROM timetrails.cpu WHERE $timeFilter');
         });
     });
 
