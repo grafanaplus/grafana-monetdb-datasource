@@ -26,10 +26,16 @@ export default class MonetSeries {
         let fieldIndex = 0; // field index in select part
 
         do {
-            let label  = metricName + '_' + queryPart.create(t.select[fieldIndex][0]).render();
+            let alias;
+            try{
+                 alias = t.select[fieldIndex].filter(next => next.type === 'alias')[0].params[0];
+            } catch (err) {
+                // console.log(err);
+            }
+            let label  = metricName + '_' + alias || queryPart.create(t.select[fieldIndex][0]).render();
             let datapoints = [];
             for (let row of this.serie.values) {
-                let ts = row[0] * 1000; // Grafana needs timestamps in ms 
+                let ts = row[0] * 1000; // Grafana needs timestamps in ms
                 let pointValue = row[columnIndex];
                 let point = [pointValue, ts];
                 datapoints.push(point);
