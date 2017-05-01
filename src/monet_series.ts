@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import queryPart from './query_part';
+import TableModel from 'app/core/table_model';
 
 export default class MonetSeries {
     serie;
@@ -49,5 +50,9 @@ export default class MonetSeries {
         } while (columnIndex < resultColumnCount);
 
         return seriesList;
+    }
+
+    asTable(_target?) {
+        let table = new TableModel();
     }
 }

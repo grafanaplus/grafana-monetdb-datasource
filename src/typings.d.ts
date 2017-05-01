@@ -49,3 +49,7 @@ declare module 'app/core/utils/kbn' {
   export default kbn;
 }
 
+declare module 'app/core/table_model' {
+  export default class TableModel {}
+}
+

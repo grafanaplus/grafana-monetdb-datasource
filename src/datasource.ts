@@ -103,7 +103,6 @@ export default class MonetDatasource {
       let monetSeries = new MonetSeries(result.series, target);
       seriesList = seriesList.concat(monetSeries.asGraph());
     }
-    
     return { data: seriesList };
   }
 
