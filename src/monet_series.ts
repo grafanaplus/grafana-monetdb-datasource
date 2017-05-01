@@ -32,7 +32,7 @@ export default class MonetSeries {
             } catch (err) {
                 // console.log(err);
             }
-            let label  = metricName + '_' + alias || queryPart.create(t.select[fieldIndex][0]).render();
+            let label  = t.alias || (metricName + '_' + (alias || queryPart.create(t.select[fieldIndex][0]).render()));
             let datapoints = [];
             for (let row of this.serie.values) {
                 let ts = row[0] * 1000; // Grafana needs timestamps in ms
