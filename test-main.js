@@ -18,6 +18,7 @@
             'app/core/config': 'sdk/core/config.js',
             'app/core/settings': 'sdk/core/settings.js',
             'app/core/utils/kbn': 'sdk/core/kbn.js',
+            'app/core/table_model': 'sdk/core/table_model.js',
             'jasmine': "node_modules/jasmine-core/lib/jasmine-core.js",
             "jquery": "node_modules/jquery/dist/jquery.js",
             'moment': 'node_modules/moment/moment.js',
