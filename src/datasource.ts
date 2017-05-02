@@ -100,14 +100,27 @@ export default class MonetDatasource {
     for (let i in data.results) {
       let result = data.results[i];
       let target = queryTargets[i];
-      let monetSeries = new MonetSeries(result.series, target);
+      let monetSeries = new MonetSeries(result.series, {target: target});
       seriesList = seriesList.concat(monetSeries.asGraph());
     }
     return { data: seriesList };
   }
 
   annotationQuery(options) {
-    // TODO 
+    if (!options.annotation.query) {
+      return this.$q.reject({message: 'Query missing in annotation definition'});
+    }
+
+    var timeFilter = this.getTimeFilter(options);
+    var query = options.annotation.query.replace('$timeFilter', timeFilter);
+    query = this.templateSrv.replace(query, null, 'regex');
+
+    return this._seriesQuery(query, options).then(data => {
+      if (!data || !data.results || !data.results[0]) {
+        throw { message: 'No results in response from MonetDB' };
+      }
+      return new MonetSeries(data.results[0].series, {annotation: options.annotation}).getAnnotations();
+    });
   };
 
 

@@ -8,10 +8,10 @@ export default class MonetSeries {
     annotation;
     target;
 
-    constructor(serie, target?, annotation?) {
+    constructor(serie, options?) {
         this.serie = serie;
-        this.target = target;
-        this.annotation = annotation;
+        this.target = options.target;
+        this.annotation = options.annotation;
     }
 
     /**
@@ -28,12 +28,12 @@ export default class MonetSeries {
 
         do {
             let alias;
-            try{
-                 alias = t.select[fieldIndex].filter(next => next.type === 'alias')[0].params[0];
+            try {
+                alias = t.select[fieldIndex].filter(next => next.type === 'alias')[0].params[0];
             } catch (err) {
                 // console.log(err);
             }
-            let label  = t.alias || (metricName + '_' + (alias || queryPart.create(t.select[fieldIndex][0]).render()));
+            let label = t.alias || (metricName + '_' + (alias || queryPart.create(t.select[fieldIndex][0]).render()));
             let datapoints = [];
             for (let row of this.serie.values) {
                 let ts = row[0] * 1000; // Grafana needs timestamps in ms
@@ -54,5 +54,23 @@ export default class MonetSeries {
 
     asTable(_target?) {
         let table = new TableModel();
+        // Seems nothng to do here for now.
     }
+
+    getAnnotations() {
+        let annotationList = [];
+        for (let row of this.serie.values) {
+            let ts = row[0] * 1000; // Grafana needs timestamps in ms
+            let value = row[1];
+            annotationList.push({
+                annotation: this.annotation,
+                tags: this.annotation.tagsColumn && this.annotation.tagsColumn.split(/,|\s/),
+                text: this.annotation.textColumn,
+                time: ts,
+                title: this.annotation.titleColumn || value
+            });
+        }
+        return annotationList;
+    }
+
 }
