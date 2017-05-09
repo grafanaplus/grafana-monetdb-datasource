@@ -94,9 +94,9 @@ export class MonetQueryCtrl extends QueryCtrl {
       // if (!this.queryModel.hasFill()) {
       //   options.push(this.uiSegmentSrv.newSegment({value: 'fill(null)'}));
       // }
-      // if (!this.queryModel.hasGroupByTime()) {
-      //   options.push(this.uiSegmentSrv.newSegment({value: 'time($interval)'}));
-      // }
+      if (!this.queryModel.hasGroupByTime()) {
+        options.push(this.uiSegmentSrv.newSegment({value: 'time($interval)'}));
+      }
       for (let tag of tags) {
         options.push(this.uiSegmentSrv.newSegment({value: 'tag(' + tag.text + ')'}));
       }

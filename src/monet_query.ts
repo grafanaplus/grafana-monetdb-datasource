@@ -23,14 +23,13 @@ export default class MonetQuery {
     // tag columns
     target.tags = target.tags || [];
     // N/A in Monet
-    // target.groupBy = target.groupBy || [
-    //   {type: 'time', params: ['$__interval']},
-    //   {type: 'fill', params: ['null']},
-    // ];
-    target.groupBy = target.groupBy || [];
+    target.groupBy = target.groupBy || [
+      {type: 'time', params: ['$__interval']},
+      // {type: 'fill', params: ['null']},
+    ];
     target.select = target.select || [[
       { type: 'field', params: ['value'] },
-      // { type: 'mean', params: [] },
+      { type: 'avg', params: [] },
     ]];
 
     this.updateProjection();
@@ -199,6 +198,10 @@ export default class MonetQuery {
     return escapedValues.join('|');
   };
 
+  renderWithTimeInterval(interpolate?) {
+
+  }
+
   render(interpolate?) {
     var target = this.target;
 
@@ -208,6 +211,10 @@ export default class MonetQuery {
       } else {
         return target.query;
       }
+    }
+
+    if (this.hasGroupByTime()) {
+      return this.renderWithTimeInterval();
     }
 
     // Epoch time in ms
