@@ -248,13 +248,14 @@ export default class MonetQuery {
     let selectFieldExpressions = this.renderSelectFieldExpressions();
     let tableName = this.getMeasurementAndPolicy(interpolate);
     let whereConditionsText = this.renderWhereConditions();
-    let groupByText = this.renderGroupBy();
-    groupByText = groupByText ? `period, ${groupByText}` : 'period';
+    let groupByTagText = this.renderGroupBy();
+    let groupByText = groupByTagText ? `period, ${groupByTagText}` : 'period';
+    let groupByPeriodAndTagText = groupByTagText ? `(sys.epoch(time)/${interval}) as period, ${groupByTagText}` : `(sys.epoch(time)/${interval}) as period`;
 
-    let query = `WITH T(${TS_COLUMN_NAME}, ${selectFieldNames}, period)
-            AS (SELECT ${TS_COLUMN_NAME}, ${selectFieldNames}, (sys.epoch(time)/${interval}) as period FROM ${tableName}
+    let query = `WITH T(${TS_COLUMN_NAME}, ${selectFieldNames}, ${groupByText})
+            AS (SELECT ${TS_COLUMN_NAME}, ${selectFieldNames}, ${groupByPeriodAndTagText} FROM ${tableName}
             WHERE ${whereConditionsText})
-        SELECT cast(avg(sys.epoch(${TS_COLUMN_NAME})) as int), ${selectFieldExpressions} 
+        SELECT cast(avg(sys.epoch(${TS_COLUMN_NAME})) as int), ${selectFieldExpressions}
         FROM T 
         GROUP BY ${groupByText}`;
 
