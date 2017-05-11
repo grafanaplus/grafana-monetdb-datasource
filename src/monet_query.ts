@@ -1,6 +1,8 @@
 import _ from 'lodash';
 import queryPart from './query_part';
 import kbn from 'app/core/utils/kbn';
+import { TS_COLUMN_NAME } from './constants';
+import { QueryEditorError } from './error';
 
 export default class MonetQuery {
   target: any;
@@ -24,7 +26,7 @@ export default class MonetQuery {
     target.tags = target.tags || [];
     // N/A in Monet
     target.groupBy = target.groupBy || [
-      {type: 'time', params: ['$__interval']},
+      { type: 'time', params: ['$__interval'] },
       // {type: 'fill', params: ['null']},
     ];
     target.select = target.select || [[
@@ -54,7 +56,6 @@ export default class MonetQuery {
   hasGroupByTime() {
     return _.find(this.target.groupBy, (g: any) => g.type === 'time');
   }
-
 
   hasFill() {
     return _.find(this.target.groupBy, (g: any) => g.type === 'fill');
@@ -198,8 +199,94 @@ export default class MonetQuery {
     return escapedValues.join('|');
   };
 
-  renderWithTimeInterval(interpolate?) {
+  /**
+   * Render SELECT field names only.
+   */
+  renderSelectFieldNames() {
+    let selectFieldsArr = [];
+    for (let model of this.selectModels) {
+      selectFieldsArr = selectFieldsArr.concat(model.filter(next => next.part.type === 'field'));
+    }
+    return selectFieldsArr.map(field => field.render()).join(', ');
+  }
 
+  /**
+   * Render SELECT fields with or without aggregate function.
+   */
+  renderSelectFieldExpressions() {
+    let selectFieldsArr = [];
+    for (let model of this.selectModels) {
+      if (model.length > 1) {
+        selectFieldsArr = selectFieldsArr.concat(model.reduce((acc, curr) => {
+          return curr.render(acc.render());
+        }));
+      } else {
+        selectFieldsArr = selectFieldsArr.concat(model.map(field => field.render()));
+      }
+    }
+    return selectFieldsArr.join(', ');
+  }
+
+  renderWhereConditions(interpolate?) {
+    let conditionsArr = [];
+    conditionsArr = conditionsArr.concat(this.target.tags.map((tag, index) => this.renderTagCondition(tag, index, interpolate)));
+    let conditionStr = conditionsArr.join(' ');
+    return conditionStr ? `${conditionStr} AND $timeFilter` : '$timeFilter';
+  }
+
+  /**
+   * Render group by fields.
+   */
+  renderGroupBy() {
+    let groupByArr = [];
+    groupByArr = groupByArr.concat(this.groupByParts.filter(part => part.def.type !== 'time').map(part => part.render()));
+    return groupByArr.join(', ');
+  }
+
+  renderWithTimeInterval(interval: Number, interpolate?) {
+    let selectFieldNames = this.renderSelectFieldNames();
+    let selectFieldExpressions = this.renderSelectFieldExpressions();
+    let tableName = this.getMeasurementAndPolicy(interpolate);
+    let whereConditionsText = this.renderWhereConditions();
+    let groupByText = this.renderGroupBy();
+    groupByText = groupByText ? `period, ${groupByText}` : 'period';
+
+    let query = `WITH T(${TS_COLUMN_NAME}, ${selectFieldNames}, period)
+            AS (SELECT ${TS_COLUMN_NAME}, ${selectFieldNames}, (sys.epoch(time)/${interval}) as period FROM ${tableName}
+            WHERE ${whereConditionsText})
+        SELECT cast(avg(sys.epoch(${TS_COLUMN_NAME})) as int), ${selectFieldExpressions} 
+        FROM T 
+        GROUP BY ${groupByText}`;
+
+    // "WITH T(time, room, level, temp, period)
+    //       AS (SELECT time, room, level, temp, (sys.epoch(time)/(60*15)) as period FROM rooms
+    //       WHERE time > now() - INTERVAL '1' YEAR)
+    // SELECT sys.epoch(cast(avg(sys.epoch(time)) as int)), room, level, avg(T.temp), period FROM T GROUP BY period, room, level"
+
+    return query;
+  }
+
+  timeIntervalAsSeconds(): Number {
+    let timePart = this.groupByParts.filter(part => part.def.type === 'time')[0];
+    let interval = timePart.params[0];
+    if (interval === 'auto') {
+      interval = this.scopedVars.interval.value;
+    }
+    let parts = /^(\d+)([h|m|s])$/.exec(interval);
+    if (!parts) {
+      throw new QueryEditorError('Invalid Time Interval!');
+    }
+    let n = parseInt(parts[1]);
+    let unit = parts[2];
+    if (unit === 's') {
+      return n;
+    }
+    if (unit === 'm') {
+      return 60*n;
+    }
+    if (unit === 'h') {
+      return 60*60*n;
+    }
   }
 
   render(interpolate?) {
@@ -214,7 +301,13 @@ export default class MonetQuery {
     }
 
     if (this.hasGroupByTime()) {
-      return this.renderWithTimeInterval();
+      let timeInterval;
+      try {
+        timeInterval = this.timeIntervalAsSeconds();
+      } catch (err) {
+        return '';
+      }
+      return this.renderWithTimeInterval(timeInterval, interpolate);
     }
 
     // Epoch time in ms
