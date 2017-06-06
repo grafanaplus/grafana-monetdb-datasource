@@ -1,1 +1,1 @@
-export const TS_COLUMN_NAME = 'time';
+export const TS_COLUMN_NAME = 'ticks';

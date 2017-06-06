@@ -328,14 +328,14 @@ register({
   renderer: functionRenderer,
 });
 
-register({
-  type: 'percentile',
-  addStrategy: replaceAggregationAddStrategy,
-  category: categories.Selectors,
-  params: [{name: 'nth', type: 'int'}],
-  defaultParams: [95],
-  renderer: functionRenderer,
-});
+// register({
+//   type: 'percentile',
+//   addStrategy: replaceAggregationAddStrategy,
+//   category: categories.Selectors,
+//   params: [{name: 'nth', type: 'int'}],
+//   defaultParams: [95],
+//   renderer: functionRenderer,
+// });
 
 // register({
 //   type: 'top',

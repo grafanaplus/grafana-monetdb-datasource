@@ -250,7 +250,7 @@ export default class MonetQuery {
     let whereConditionsText = this.renderWhereConditions();
     let groupByTagText = this.renderGroupBy();
     let groupByText = groupByTagText ? `period, ${groupByTagText}` : 'period';
-    let groupByPeriodAndTagText = groupByTagText ? `(sys.epoch(time)/${interval}) as period, ${groupByTagText}` : `(sys.epoch(time)/${interval}) as period`;
+    let groupByPeriodAndTagText = groupByTagText ? `(sys.epoch(${TS_COLUMN_NAME})/${interval}) as period, ${groupByTagText}` : `(sys.epoch(${TS_COLUMN_NAME})/${interval}) as period`;
 
     let query = `WITH T(${TS_COLUMN_NAME}, ${selectFieldNames}, ${groupByText})
             AS (SELECT ${TS_COLUMN_NAME}, ${selectFieldNames}, ${groupByPeriodAndTagText} FROM ${tableName}
@@ -258,11 +258,6 @@ export default class MonetQuery {
         SELECT cast(avg(sys.epoch(${TS_COLUMN_NAME})) as int), ${selectFieldExpressions}
         FROM T 
         GROUP BY ${groupByText}`;
-
-    // "WITH T(time, room, level, temp, period)
-    //       AS (SELECT time, room, level, temp, (sys.epoch(time)/(60*15)) as period FROM rooms
-    //       WHERE time > now() - INTERVAL '1' YEAR)
-    // SELECT sys.epoch(cast(avg(sys.epoch(time)) as int)), room, level, avg(T.temp), period FROM T GROUP BY period, room, level"
 
     return query;
   }
@@ -312,7 +307,7 @@ export default class MonetQuery {
     }
 
     // Epoch time in ms
-    var query = 'SELECT sys.epoch(time)';
+    var query = `SELECT sys.epoch(${TS_COLUMN_NAME})`;
     var i, y;
     for (i = 0; i < this.selectModels.length; i++) {
       let parts = this.selectModels[i];
@@ -352,7 +347,7 @@ export default class MonetQuery {
     }
 
     if (target.orderByTime === 'DESC') {
-      query += ' ORDER BY time DESC';
+      query += ` ORDER BY ${TS_COLUMN_NAME} DESC`;
     }
 
     if (target.limit || target.maxDataPoints) {

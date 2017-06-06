@@ -1,5 +1,6 @@
 import MonetQuery from '../monet_query';
 import { QueryEditorError } from '../error';
+import { TS_COLUMN_NAME } from '../constants';
 
 describe('Monet Query', () => {
     var templateSrv = { replace: val => val };
@@ -11,7 +12,7 @@ describe('Monet Query', () => {
     //         }, templateSrv, {});
 
     //         let queryText = query.render();
-    //         expect(queryText).toBe('SELECT sys.epoch(time), value FROM timetrails.cpu WHERE $timeFilter');
+    //         expect(queryText).toBe(`SELECT sys.epoch(${TS_COLUMN_NAME}), value FROM timetrails.cpu WHERE $timeFilter`);
     //     });
     // });
 
@@ -23,7 +24,7 @@ describe('Monet Query', () => {
     //         }, templateSrv, {});
 
     //         var queryText = query.render();
-    //         expect(queryText).toBe('SELECT sys.epoch(time), value FROM 5m_avg.cpu WHERE $timeFilter');
+    //         expect(queryText).toBe(`SELECT sys.epoch(${TS_COLUMN_NAME}), value FROM 5m_avg.cpu WHERE $timeFilter`);
     //     });
     // });
 
@@ -40,7 +41,7 @@ describe('Monet Query', () => {
         //     }, templateSrv, {});
 
         //     var queryText = query.render();
-        //     expect(queryText).toBe('SELECT sys.epoch(time), value AS text FROM timetrails.cpu WHERE $timeFilter');
+        //     expect(queryText).toBe(`SELECT sys.epoch(${TS_COLUMN_NAME}), value AS text FROM timetrails.cpu WHERE $timeFilter`);
         // });
     });
 
@@ -71,7 +72,7 @@ describe('Monet Query', () => {
         //     }, templateSrv, {});
 
         //     var queryText = query.render();
-        //     expect(queryText).toBe('SELECT sys.epoch(time), value FROM timetrails.cpu WHERE hostname = \'server1\' AND app = \'email\' AND ' +
+        //     expect(queryText).toBe(`SELECT sys.epoch(${TS_COLUMN_NAME}), value FROM timetrails.cpu WHERE hostname = \'server1\' AND app = \'email\' AND ` +
         //         '$timeFilter GROUP BY hostname');
         // });
     });
@@ -85,7 +86,7 @@ describe('Monet Query', () => {
     //         }, templateSrv, {});
 
     //         var queryText = query.render();
-    //         expect(queryText).toBe('SELECT sys.epoch(time), value FROM timetrails.cpu WHERE hostname = \'server1\' OR hostname = \'server2\' AND ' +
+    //         expect(queryText).toBe(`SELECT sys.epoch(${TS_COLUMN_NAME}), value FROM timetrails.cpu WHERE hostname = \'server1\' OR hostname = \'server2\' AND ` +
     //             '$timeFilter GROUP BY hostname');
     //     });
     // });
@@ -99,7 +100,7 @@ describe('Monet Query', () => {
         //     }, templateSrv, {});
 
         //     var queryText = query.render();
-        //     expect(queryText).toBe('SELECT sys.epoch(time), value FROM timetrails.cpu WHERE value > 5 AND $timeFilter');
+        //     expect(queryText).toBe(`SELECT sys.epoch(${TS_COLUMN_NAME}), value FROM timetrails.cpu WHERE value > 5 AND $timeFilter`);
         // });
     });
 
@@ -111,7 +112,7 @@ describe('Monet Query', () => {
                 groupBy: [],
             }, templateSrv, {});
             var queryText = query.render();
-            expect(queryText).toBe('SELECT sys.epoch(time), value FROM timetrails.cpu WHERE $timeFilter');
+            expect(queryText).toBe(`SELECT sys.epoch(${TS_COLUMN_NAME}), value FROM timetrails.cpu WHERE $timeFilter`);
         });
     });
 
@@ -311,10 +312,10 @@ describe('Monet Query', () => {
                     groupBy: [{ type: 'time', params: ['15m'] }],
                 }, templateSrv, {});
                 let interval = 60 * 15;
-                let targetQuery = `WITH T(time, temp, period)
-                        AS (SELECT time, temp, (sys.epoch(time)/${interval}) as period FROM timetrails.rooms 
+                let targetQuery = `WITH T(${TS_COLUMN_NAME}, temp, period)
+                        AS (SELECT ${TS_COLUMN_NAME}, temp, (sys.epoch(${TS_COLUMN_NAME})/${interval}) as period FROM timetrails.rooms 
                         WHERE $timeFilter) 
-                    SELECT cast(avg(sys.epoch(time)) as int), avg(temp) 
+                    SELECT cast(avg(sys.epoch(${TS_COLUMN_NAME})) as int), avg(temp) 
                     FROM T 
                     GROUP BY period`;
                 let resultQuery = query.renderWithTimeInterval(interval, true);

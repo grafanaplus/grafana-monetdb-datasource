@@ -1,4 +1,5 @@
 import MonetSeries from '../monet_series';
+import { TS_COLUMN_NAME } from '../constants';
 
 describe('When generating Grafana data from MonetDB quesry response,', () => {
 

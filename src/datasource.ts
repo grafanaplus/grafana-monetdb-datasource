@@ -5,6 +5,7 @@ import ResponseParser from './response_parser';
 import MonetQuery from './monet_query';
 import MonetSeries from './monet_series';
 import MonetQueryBuilder from './query_builder';
+import { TS_COLUMN_NAME } from './constants';
 
 export default class MonetDatasource {
   type: string;
@@ -209,10 +210,10 @@ export default class MonetDatasource {
     let from = this.getMonetTime(options.rangeRaw.from, false);
     let until = this.getMonetTime(options.rangeRaw.to, true);
     if (until === 'now()') {
-      return 'time > ' + from;
+      return `${TS_COLUMN_NAME} > ` + from;
     }
 
-    return 'time > ' + from + ' and time < ' + until;
+    return `${TS_COLUMN_NAME} > ` + from + ` and ${TS_COLUMN_NAME} < ` + until;
   }
 
   getMonetTime(date, roundUp) {
