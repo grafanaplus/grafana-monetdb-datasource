@@ -4,6 +4,7 @@ import MonetQuery from './monet_query';
 import MonetQueryBuilder from './query_builder';
 import queryPart from './query_part';
 import _ from 'lodash';
+import { TS_COLUMN_NAME } from './constants';
 
 export class MonetQueryCtrl extends QueryCtrl {
   static templateUrl = 'partials/query.editor.html';

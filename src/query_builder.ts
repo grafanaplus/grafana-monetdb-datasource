@@ -39,7 +39,7 @@ export default class MonetQueryBuilder {
         let query;
         switch (type) {
             case 'METRICS': {
-                query = "SELECT name FROM tables WHERE schema_id=(SELECT id as id FROM schemas WHERE name='timetrails') AND name<>'metrics'";
+                query = "SELECT * FROM timetrails.measurments()";
                 break;
             };
             case 'FIELDS': {
