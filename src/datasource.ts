@@ -28,10 +28,10 @@ export default class MonetDatasource {
       return url.trim();
     });
 
-    this.username = instanceSettings.username;
-    this.password = instanceSettings.password;
+    this.username = instanceSettings.jsonData.user;
+    this.password = instanceSettings.jsonData.password;
     this.name = instanceSettings.name;
-    this.database = instanceSettings.database;
+    this.database = instanceSettings.jsonData.database;
     this.basicAuth = instanceSettings.basicAuth;
     this.withCredentials = instanceSettings.withCredentials;
     this.interval = (instanceSettings.jsonData || {}).timeInterval;
@@ -162,8 +162,9 @@ export default class MonetDatasource {
     self.urls.push(currentUrl);
 
     let params: any = {
-      u: self.username,
-      p: self.password,
+      user: self.username,
+      pass: self.password,
+      db: self.database
     };
 
     if (self.database) {
